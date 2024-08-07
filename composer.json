@@ -11,11 +11,12 @@
         "giggsey/libphonenumber-for-php": "^8.13",
         "laravel/cashier": "^15.4",
         "laravel/framework": "^11.9",
+        "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.15",
         "laravel/tinker": "^2.9",
         "predis/predis": "^2.2",
-        "spatie/image-optimizer": "^1.7",
         "spatie/laravel-activitylog": "^4.8",
+        "spatie/laravel-image-optimizer": "^1.8",
         "spatie/laravel-permission": "^6.9",
         "spatie/laravel-translation-loader": "^2.8"
     },
