@@ -11,7 +11,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Currency extends Model
 {
-    use HasFactory, LogsActivity, Filterable ;
+    use HasFactory, LogsActivity, Filterable, HasTranslations;
 
     public $translatable = ['name', 'symbol'];
 
