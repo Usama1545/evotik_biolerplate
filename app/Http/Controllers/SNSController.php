@@ -11,7 +11,7 @@ use App\Models\EmailMeta;
 use App\Models\Lead;
 use App\Models\Message as ModelsMessage;
 use App\Models\Sender;
-use App\Models\Suppression;
+use App\Models\EmailSuppression;
 use App\Models\Upload;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -50,7 +50,7 @@ class SNSController extends Controller
                                 $this->unsubscribeLead($emailMeta->lead_id);
                             }
                             $emailMeta->update(['is_bounced' => true]);
-                            Suppression::firstOrCreate(['email' => $data['mail']['destination'][0]]);
+                            EmailSuppression::firstOrCreate(['email' => $data['mail']['destination'][0]]);
                             return true;
 
                         case 'Bounced':
@@ -58,7 +58,7 @@ class SNSController extends Controller
                                 $this->unsubscribeLead($emailMeta->lead_id);
                             }
                             $emailMeta->update(['is_bounced' => true]);
-                            Suppression::firstOrCreate(['email' => $data['mail']['destination'][0]]);
+                            EmailSuppression::firstOrCreate(['email' => $data['mail']['destination'][0]]);
                             return true;
 
                         case 'Delivery':
@@ -79,7 +79,7 @@ class SNSController extends Controller
                                 $this->unsubscribeLead($emailMeta->lead_id);
                             }
                             $emailMeta->update(['is_complaint' => true]);
-                            Suppression::firstOrCreate(['email' => $data['mail']['destination'][0]]);
+                            EmailSuppression::firstOrCreate(['email' => $data['mail']['destination'][0]]);
                             return true;
 
                         case 'Open':

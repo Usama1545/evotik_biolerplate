@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Subscription;
-use App\Models\Suppression;
+use App\Models\EmailSubscription;
+use App\Models\EmailSuppression;
 
 class EmailValidationService
 {
@@ -51,7 +51,7 @@ class EmailValidationService
         $response = false;
         $is_valid_email = $this->verify($email);
         if (!empty($is_valid_email) && $is_valid_email['overall']) {
-            $suppression = Suppression::where('email', $email)->first();
+            $suppression = EmailSuppression::where('email', $email)->first();
             if (empty($suppression)) {
                 $response = true;
             }
@@ -67,7 +67,7 @@ class EmailValidationService
     public function subscription_check($model, $id): bool
     {
         $response = false;
-        $subscription = Subscription::where('subscribable_id', $id)
+        $subscription = EmailSubscription::where('subscribable_id', $id)
             ->where('subscribable_type', $model)
             ->first();
         if (!empty($subscription)) {

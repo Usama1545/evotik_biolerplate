@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmailSubscriptionController;
 use App\Http\Controllers\IssueReportController;
 use App\Http\Controllers\MetaController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\SiteMapController;
 use App\Http\Controllers\SNSController;
 use App\Http\Controllers\UploadController;
@@ -31,14 +33,23 @@ Route::controller(SNSController::class)->group(function () {
     Route::post('sns-inbox', 'emailHook');
 });
 
+Route::apiResource('email-subscriptions', EmailSubscriptionController::class);
+
+Route::get('/plans', [PlanController::class, 'index'])->name('plans.index');
+
 Route::controller(SiteMapController::class)->prefix('sitemap')->group(function () {
     Route::get('/{locale?}', 'index')->name('sitemaps.index');
     Route::get('/{locale?}/sub-tender-activities/{subTenderActivity}', 'subTenderActivitiesSitemap');
     Route::get('/{locale?}/{sitemap}', 'sitemap');
 });
 
+//Auth:Sanctum Routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
-
+    Route::apiResource('/plans', PlanController::class)->except('index');
+    Route::controller(PlanController::class)->prefix('plans')->group(function () {
+        Route::post('/subscribe/{plan}', 'createSubscription');
+        Route::get('/billing-protal', 'getUserBillingPortal');
+    });
     Route::post('uploads', [UploadController::class, 'storeFiles'])->name('upload.store');
     Route::delete('uploads/{id}', [UploadController::class, 'destroy'])->name('upload.destroy');
     Route::post('issue-reports', [IssueReportController::class, 'create']);
